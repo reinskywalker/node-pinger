@@ -7,7 +7,7 @@ async function delay(ms) {
 
 async function startSequentialPing(config) {
   const startTime = Date.now();
-  let stopAfter = config.duration ? config.duration * 1000 : null;
+  const stopAfter = config.duration > 0 ? config.duration * 1000 : null;
 
   while (true) {
     const result = await hitURL(config);
@@ -15,7 +15,7 @@ async function startSequentialPing(config) {
     logToFile(result, config);
 
     if (stopAfter && Date.now() - startTime >= stopAfter) {
-      console.log('🛑 Benchmark selesai (duration cap reached)');
+      console.log('🛑 Benchmark selesai (duration reached)');
       break;
     }
 

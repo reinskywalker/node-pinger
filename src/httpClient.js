@@ -6,11 +6,7 @@ async function hitURL(config) {
   while (attempts <= config.retries) {
     const start = Date.now();
     try {
-      const res = await axios({
-        url: config.url,
-        method: config.method,
-        timeout: 10000
-      });
+      const res = await axios.get(config.url, { timeout: 10000 });
       const duration = Date.now() - start;
 
       return {
@@ -27,7 +23,7 @@ async function hitURL(config) {
           duration: Date.now() - start
         };
       }
-      await new Promise(res => setTimeout(res, config.retryDelay));
+      await new Promise(res => setTimeout(res, config.retryDelay * 1000));
     }
   }
 }
